@@ -46,7 +46,7 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
     # Send DATA command and handle server response.
     # Fill in start
     # clientSocket.send('DATA'.encode())
-    data = 'DATA\r\n.\r\n'
+    data = 'DATA\r\n'
     clientSocket.send(data.encode())
     recv4 = clientSocket.recv(1024).decode()
     print('DATA response: ', recv4)
@@ -54,16 +54,18 @@ def smtp_client(port=1025, mailserver='127.0.0.1'):
 
     # Send message data.
     # Fill in start
+    subject = 'subject: Please Stop \r\n'
+    clientSocket.send(subject.encode())
     msgdata = 'Hi Bob, please stop emailing me.\r\n'
     clientSocket.send(msgdata.encode())
-    recv5 = clientSocket.recv(1024).decode()
-    print('msgdata response: ', recv5)
+    # clientSocket.send(msgdata.encode())
+    # recv5 = clientSocket.recv(1024).decode()
+    # print('msgdata response: ', recv5)
     # Fill in end
 
     # Message ends with a single period, send message end and handle server response.
     # Fill in start
-    msgend = '.\r\n'
-    clientSocket.send(msgend.encode())
+    clientSocket.send(endmsg.encode())
     recv6 = clientSocket.recv(1024).decode()
     print(recv6)
     # Fill in end
